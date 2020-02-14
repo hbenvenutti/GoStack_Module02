@@ -1,21 +1,24 @@
-const express = require('express');
-const routes = require('./routes');
+import express from 'express'; // <== sucrase lets this happen
+import routes from './routes'; // without it => needs require(...)
 
-class App{
-    constructor(){
-        this.server =  express();
-        
-        this.middlewares();
-        this.routes();
-    };
+class App {
+  constructor() {
+    this.server = express();
 
-    middlewares(){
-        this.server.use(express.json());
-    };
+    this.middlewares();
+    this.routes();
+  }
 
-    routes(){
-        this.server.use(routes)
-    };
-};
+  middlewares() {
+    this.server.use(express.json());
+  }
 
-module.exports = new App().server;
+  routes() {
+    this.server.use(routes);
+  }
+}
+
+export default new App().server; // <== <==
+
+// sucrase lets this happen
+// without sucrase => module.exports = <...>
