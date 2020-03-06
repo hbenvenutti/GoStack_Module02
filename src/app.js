@@ -1,4 +1,6 @@
 import express from 'express'; // <== sucrase lets this happen
+import path from 'path';
+
 import routes from './routes'; // without it => needs require(...)
 
 import './database';
@@ -13,6 +15,11 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+      // express.static() é um métod para arquivos estáticos;
+    );
   }
 
   routes() {
