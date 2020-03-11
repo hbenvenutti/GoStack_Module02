@@ -130,6 +130,11 @@ class AppointmentController {
           as: 'provider',
           attributes: ['name', 'email'],
         },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
       ],
     });
 
@@ -144,7 +149,9 @@ class AppointmentController {
     }
 
     const subDate = subHours(appointment.date, 2);
-    // subHours substract hours from a time, passing the date and how many hours;
+    /* subHours substract hours from a time,
+       passing the date and how many hours;
+    */
 
     if (isBefore(subDate, new Date())) {
       return res
@@ -159,7 +166,19 @@ class AppointmentController {
     await Mail.sendMail({
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: 'Agendamento Cancelado',
-      text: 'Você tem um novo cancelamento',
+      template: 'cancellation',
+      // could be text, html, etc.. - If there was no template engine
+      context: {
+        provider: appointment.provider.name,
+        user: appointment.user.name,
+        date: format(
+          appointment.date,
+          "'dia' dd 'de' MMMM', às' HH:mm' horas.'",
+          {
+            locale: pt,
+          }
+        ),
+      },
     });
 
     return res.json(appointment);
