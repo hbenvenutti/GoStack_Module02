@@ -7,7 +7,7 @@ class CancellationMail {
     return 'CancellationMail';
   }
 
-  async handle(data) {
+  async handle({ data }) {
     const { appointment } = data;
 
     console.log('Inside CancellationMail.handle()');
