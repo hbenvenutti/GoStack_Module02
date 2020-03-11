@@ -1,8 +1,0 @@
--Installed express-handlebars nodemailer-express-handlebars;
--Configured it in lib/Mail.js;
--Created the directories tree;
--Created a default layout;
--Created a footer;
--Created a template called cancellation;
--Coded the delete route on appointment controller to use the template
-to send the email via nodemailer;
